@@ -1,0 +1,35 @@
+name: test
+
+on: 
+  watch:
+    types: started
+
+  repository_dispatch:
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: Ubuntu-20.04
+    
+    name: test ${{matrix.target}}
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ["${{ github.event.client_payload.target }}"]
+        
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Load Settings.ini
+      run: |
+        ls
+    - name: wget files
+      run: |
+        wget -N --no-check-certificate "https://raw.githubusercontent.com/GiGaFotress/Vtuber-recorder/master/onekey.sh"
+        chmod +x onekey.sh
+    - name: SSH connection to Actions
+      uses: garypang13/debugger-action@master
+      if: contains(github.event.action, 'ssh')
