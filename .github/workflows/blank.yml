@@ -8,6 +8,7 @@ on:
 
 env:
   TZ: Asia/Shanghai
+  ssh: "true"
 
 jobs:
   build:
