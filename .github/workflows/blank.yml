@@ -8,7 +8,7 @@ on:
 
 env:
   TZ: Asia/Shanghai
-  ssh: "true"
+  ssh: 'true'
 
 jobs:
   build:
@@ -33,4 +33,4 @@ jobs:
         chmod +x onekey.sh
     - name: SSH connection to Actions
       uses: garypang13/debugger-action@master
-      if: contains(github.event.action, 'ssh')
+      if: (env.ssh == 'true')
