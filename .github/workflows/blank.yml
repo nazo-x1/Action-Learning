@@ -9,7 +9,9 @@ on:
 env:
   TZ: Asia/Shanghai
   ssh: 'true'
-
+  UPLOAD_COWTRANSFER: true
+  UPLOAD_WETRANSFER: true
+  path: ./tmp
 jobs:
   build:
     runs-on: Ubuntu-20.04
@@ -34,3 +36,20 @@ jobs:
     - name: SSH connection to Actions
       uses: garypang13/debugger-action@master
       if: (env.ssh == 'true')
+
+    - name: Upload to cowtransfer
+      id: cowtransfer
+      if: env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${env.path} 2>&1 | tee cowtransfer.log
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+        echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+    - name: Upload to WeTransfer
+      id: wetransfer
+      if: env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress ${env.path} 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
