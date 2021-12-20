@@ -11,14 +11,11 @@ on:
 
 env:
   TZ: Asia/Shanghai
-  ssh: 'true'
-  UPLOAD_COWTRANSFER: true
-  UPLOAD_WETRANSFER: true
-  path: ./tmp
+
 jobs:
   build:
     runs-on: Ubuntu-20.04
-    
+
     name: test ${{matrix.target}}
     strategy:
       fail-fast: false
@@ -29,9 +26,5 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - name: SSH connection to Actions
-      uses: P3TERX/ssh2actions@v1.0.0
-      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
-      env:
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+     - name: Setup Debug Session
+       uses: csexton/debugger-action@master
