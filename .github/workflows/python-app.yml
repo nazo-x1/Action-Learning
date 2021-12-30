@@ -24,13 +24,18 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
-        
         git clone https://github.com/LoRexxar/Kunlun-M
         cp chrismas_tree.patch Kunlun-M/
         cd Kunlun-M
         git apply --check chrismas_tree.patch
         git am chrismas_tree.patch
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: SSH connection to Actions
+      uses: P3TERX/ssh2actions@v1.0.0
+      if: always()
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     - name: initialize settings
       run: |
         cd Kunlun-M
