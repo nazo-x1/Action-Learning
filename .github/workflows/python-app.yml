@@ -28,6 +28,8 @@ jobs:
         git clone https://github.com/LoRexxar/Kunlun-M
         cp chrismas_tree.patch Kunlun-M/
         cd Kunlun-M
+        it apply --check chrismas_tree.patch
+        git am chrismas_tree.patch
         git apply chrismas_tree.patch
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: initialize settings
