@@ -24,17 +24,20 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
+        
         git clone https://github.com/LoRexxar/Kunlun-M
         cd Kunlun-M
+        git apply ../chrismas_tree.patch
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
+    - name: initialize settings
       run: |
         cd Kunlun-M
         cp Kunlun_M/settings.py.bak Kunlun_M/settings.py
         python kunlun.py init initialize
-    - name: Test with pytest
+    - name: Test scan
       run: |
         cd Kunlun-M
+        python3 kunlun.py config load
         python3 kunlun.py scan -t ./tests/vulnerabilities/
         
     - name: run app
