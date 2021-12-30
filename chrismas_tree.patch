@@ -140,7 +140,8 @@ index 0c3ad53..9dcb82d 100644
  
          if node.node_type == 'FunctionCall' and node.source_node in self.danger_function:
 @@ -437,7 +444,7 @@ class PhpUnSerChain(BasePluginClass):
-         # 鍓╀笅鐨勯兘鐩存帴瀵箂ink_node鍋氬鐞?         else:
+         # 剩下的都直接对sink_node做处理
+         else:
              sink_node = node.sink_node
 -            matchObj = re.search(r'FunctionCall-(\w+)\(([^)]*)\)', sink_node, re.M | re.I)
 +            matchObj = Functionre.search(sink_node, re.M | re.I)
@@ -159,7 +160,8 @@ index 0c3ad53..9dcb82d 100644
                  address_id = address[1:]
  
 @@ -669,8 +676,7 @@ class PhpUnSerChain(BasePluginClass):
-         :param parent_method:  鐖舵柟娉?         :return:
+         :param parent_method:  父方法
+         :return:
          """
 -
 -        if deepth > 40:
