@@ -20,7 +20,7 @@ index 8640826..cabcdd4 100644
          if self.is_match_only_rule():
              return False
 diff --git a/core/plugins/phpunserializechain/dataflowgenerate.py b/core/plugins/phpunserializechain/dataflowgenerate.py
-index bb47963..0b38681 100644
+index bb47963..32c464b 100644
 --- a/core/plugins/phpunserializechain/dataflowgenerate.py
 +++ b/core/plugins/phpunserializechain/dataflowgenerate.py
 @@ -24,6 +24,9 @@ from Kunlun_M.const import ext_dict
@@ -43,7 +43,7 @@ index bb47963..0b38681 100644
  
 -                for dataflow in self.dataflows:
 +                logger.debug("[PhpUnSerChain] New Base dataflow generateing {}".format(base_locate))
-+                
++
 +                for dataflow in tqdm(self.dataflows):
                      if dataflow:
  
