@@ -36,4 +36,9 @@ jobs:
       run: |
         cd Kunlun-M
         python3 kunlun.py scan -t ./tests/vulnerabilities/
-        python3 kunlun.py plugin php_unserialize_chain_tools -t ../class.php
+        
+    - name: run app
+      run: |
+        cd Kunlun-M
+        python3 kunlun.py plugin php_unserialize_chain_tools -t ../vul/
+        
