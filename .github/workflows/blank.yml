@@ -8,7 +8,11 @@ on:
         description: "SSH connection to Actions"
         required: false
         default: "false"
-
+      command:
+        description: "SSH connection to Actions"
+        required: false
+        default: "echo Hellworld"
+        
 env:
   TZ: Asia/Shanghai
 
@@ -25,6 +29,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        
+      - name: Start 
+        run: |
+          github.event.inputs.ssh
 
       - name: Setup Debug Session
         uses: csexton/debugger-action@master
